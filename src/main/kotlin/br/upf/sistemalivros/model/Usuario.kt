@@ -14,6 +14,7 @@ data class Usuario(
     val email: String,
     @Enumerated(value = EnumType.STRING)
     val role: UserRole = UserRole.USER,
+
     @OneToMany(mappedBy = "usuario")
     val avaliacoes: List<Avaliacao> = listOf()
 ) : UserDetails {
