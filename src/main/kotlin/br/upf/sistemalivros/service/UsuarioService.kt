@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
+private const val USUARIO_NOT_FOUND_MESSAGE = "Usuário não encontrado!"
+
 @Service
 class UsuarioService(private val repository: UsuarioRepository,
                      private val converter: UsuarioConverter
@@ -28,7 +30,7 @@ class UsuarioService(private val repository: UsuarioRepository,
 
     fun buscarPorId(id: Long): UsuarioResponseDTO {
         val usuario = repository.findById(id)
-            .orElseThrow { NotFoundException("Usuário nao encontrado") }
+            .orElseThrow { NotFoundException(USUARIO_NOT_FOUND_MESSAGE) }
         return converter.toUsuarioResponseDTO(usuario)
     }
 
@@ -38,7 +40,7 @@ class UsuarioService(private val repository: UsuarioRepository,
 
     fun atualizar(id: Long, dto: UsuarioDTO): UsuarioResponseDTO {
         val usuario = repository.findById(id)
-            .orElseThrow{ NotFoundException("Usuário não encontrado!")}
+            .orElseThrow{ NotFoundException(USUARIO_NOT_FOUND_MESSAGE)}
             .copy(
                 nome = dto.nome,
                 email = dto.email
